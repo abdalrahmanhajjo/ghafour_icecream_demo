@@ -43,7 +43,7 @@ export default function Hero() {
           </div>
         </div>
         <div className="hero-card">
-          <img src={assetUrl('assets/hero-clean.jpg')} alt="Ghafour ice cream cone" />
+          <img src={assetUrl('assets/hero-cone.png')} alt="Ghafour ice cream cone" />
         </div>
       </div>
     </section>

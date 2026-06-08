@@ -29,9 +29,10 @@ export function AppProvider({ children }) {
     (async () => {
       try {
         const [cfg, cats, its] = await Promise.all([api.config(), api.categories(), api.items()]);
-        setConfig(cfg);
-        setCategories(cats);
-        setItems(its);
+        // Defensive: never let an unexpected API shape crash the app.
+        setConfig(cfg && typeof cfg === 'object' && !Array.isArray(cfg) ? cfg : { optionGroups: {}, optionPrices: {}, business: {} });
+        setCategories(Array.isArray(cats) ? cats : []);
+        setItems(Array.isArray(its) ? its : []);
       } catch (e) {
         console.error('Initial load failed:', e);
       } finally {

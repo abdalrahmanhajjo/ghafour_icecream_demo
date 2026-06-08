@@ -20,7 +20,21 @@ async function req(path, { method = 'GET', body, token, headers } = {}) {
     },
     body: body ? JSON.stringify(body) : undefined,
   });
-  const data = await res.json().catch(() => ({}));
+  const text = await res.text();
+  let data = {};
+  if (text) {
+    try {
+      data = JSON.parse(text);
+    } catch {
+      // Non-JSON body (e.g. an HTML page) usually means the request was misrouted —
+      // most often VITE_API_URL is unset so calls hit the static host, not the API.
+      if (res.ok) {
+        throw Object.assign(new Error('Unexpected non-JSON response (is VITE_API_URL set to the API URL?)'), {
+          status: res.status,
+        });
+      }
+    }
+  }
   if (!res.ok) {
     throw Object.assign(new Error(data.error || 'Request failed'), {
       status: res.status,
