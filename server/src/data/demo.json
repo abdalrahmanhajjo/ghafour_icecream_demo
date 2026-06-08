@@ -1,0 +1,337 @@
+{
+  "categories": [
+    {
+      "key": "arabic",
+      "labels": {
+        "ar": "عربي",
+        "en": "Arabic"
+      },
+      "sort": 0
+    },
+    {
+      "key": "fruits",
+      "labels": {
+        "ar": "فواكه",
+        "en": "Fruits"
+      },
+      "sort": 1
+    },
+    {
+      "key": "sweet",
+      "labels": {
+        "ar": "سويت",
+        "en": "Sweet"
+      },
+      "sort": 2
+    },
+    {
+      "key": "boxes",
+      "labels": {
+        "ar": "علب",
+        "en": "Boxes"
+      },
+      "sort": 3
+    },
+    {
+      "key": "cakes",
+      "labels": {
+        "ar": "كيك",
+        "en": "Cakes"
+      },
+      "sort": 4
+    }
+  ],
+  "items": [
+    {
+      "id": "arabic_mix",
+      "cat": "arabic",
+      "price": 3,
+      "image": "assets/items/real-arabic-mix.jpg",
+      "ar": {
+        "name": "بوظة عربية مشكل",
+        "desc": "مزيج نكهات عربية وفواكه طبيعية."
+      },
+      "en": {
+        "name": "Arabic Mix Ice Cream",
+        "desc": "A mix of Arabic and natural fruit flavors."
+      }
+    },
+    {
+      "id": "ashta_pistachio",
+      "cat": "arabic",
+      "price": 3.5,
+      "image": "assets/items/real-ashta-pistachio.jpg",
+      "ar": {
+        "name": "قشطة وفستق",
+        "desc": "قشطة عربية مع فستق ولمسة أصلية."
+      },
+      "en": {
+        "name": "Ashta Pistachio",
+        "desc": "Arabic ashta with pistachio and original flavor."
+      }
+    },
+    {
+      "id": "fruit_cup",
+      "cat": "fruits",
+      "price": 3,
+      "image": "assets/items/real-fruit-cups.jpg",
+      "ar": {
+        "name": "كوب فواكه طبيعي",
+        "desc": "نكهات فواكه منعشة وطبيعية."
+      },
+      "en": {
+        "name": "Natural Fruit Cup",
+        "desc": "Refreshing natural fruit flavors."
+      }
+    },
+    {
+      "id": "strawberry_scoop",
+      "cat": "fruits",
+      "price": 2.5,
+      "image": "assets/items/real-strawberry.jpg",
+      "ar": {
+        "name": "فراولة",
+        "desc": "بوظة فراولة ناعمة ومنعشة."
+      },
+      "en": {
+        "name": "Strawberry",
+        "desc": "Soft and refreshing strawberry ice cream."
+      }
+    },
+    {
+      "id": "lemon_mint",
+      "cat": "fruits",
+      "price": 2.5,
+      "image": "assets/items/real-lemon-mint.jpg",
+      "ar": {
+        "name": "ليمون ونعنع",
+        "desc": "نكهة باردة وحامضة خفيفة."
+      },
+      "en": {
+        "name": "Lemon Mint",
+        "desc": "Cool, light and tangy flavor."
+      }
+    },
+    {
+      "id": "chocolate_scoop",
+      "cat": "sweet",
+      "price": 2.75,
+      "image": "assets/items/real-chocolate.jpg",
+      "ar": {
+        "name": "شوكولا",
+        "desc": "شوكولا غنية وكريمية."
+      },
+      "en": {
+        "name": "Chocolate",
+        "desc": "Rich creamy chocolate ice cream."
+      }
+    },
+    {
+      "id": "oreo_cream",
+      "cat": "sweet",
+      "price": 3,
+      "image": "assets/items/real-oreo-cream.jpg",
+      "ar": {
+        "name": "أوريو كريم",
+        "desc": "كريمة مع قطع أوريو."
+      },
+      "en": {
+        "name": "Oreo Cream",
+        "desc": "Cream with Oreo pieces."
+      }
+    },
+    {
+      "id": "berry_sorbet",
+      "cat": "fruits",
+      "price": 3,
+      "image": "assets/items/real-berry.jpg",
+      "ar": {
+        "name": "توت طبيعي",
+        "desc": "نكهة توت قوية ومنعشة."
+      },
+      "en": {
+        "name": "Natural Berry",
+        "desc": "Strong and refreshing berry flavor."
+      }
+    },
+    {
+      "id": "half_box",
+      "cat": "boxes",
+      "price": 8,
+      "maxFlavors": 3,
+      "image": "assets/items/real-half-box.jpg",
+      "ar": {
+        "name": "علبة نصف كيلو",
+        "desc": "اختيار نكهات للبيت أو الدليفري."
+      },
+      "en": {
+        "name": "Half Kilo Box",
+        "desc": "Choose flavors for home or delivery."
+      }
+    },
+    {
+      "id": "kilo_box",
+      "cat": "boxes",
+      "price": 15,
+      "maxFlavors": 5,
+      "image": "assets/items/real-half-box.jpg",
+      "ar": {
+        "name": "علبة كيلو",
+        "desc": "علبة عائلية بنكهات متعددة."
+      },
+      "en": {
+        "name": "One Kilo Box",
+        "desc": "Family box with multiple flavors."
+      }
+    },
+    {
+      "id": "classic_ice_cake",
+      "cat": "cakes",
+      "price": 18,
+      "maxFlavors": 2,
+      "leadDays": 2,
+      "image": "assets/items/real-sweet-scoops.jpg",
+      "ar": {
+        "name": "كيكة بوظة كلاسيك",
+        "desc": "كيكة بوظة بطبقات ونكهات مشكّلة لكل مناسبة."
+      },
+      "en": {
+        "name": "Classic Ice Cream Cake",
+        "desc": "Layered ice cream cake with mixed flavors for any occasion."
+      }
+    },
+    {
+      "id": "chocolate_ice_cake",
+      "cat": "cakes",
+      "price": 20,
+      "maxFlavors": 2,
+      "leadDays": 2,
+      "image": "assets/items/real-chocolate.jpg",
+      "ar": {
+        "name": "كيكة شوكولا",
+        "desc": "كيكة بوظة شوكولا غنية مع صوص."
+      },
+      "en": {
+        "name": "Chocolate Ice Cream Cake",
+        "desc": "Rich chocolate ice cream cake with sauce."
+      }
+    },
+    {
+      "id": "oreo_ice_cake",
+      "cat": "cakes",
+      "price": 21,
+      "maxFlavors": 2,
+      "leadDays": 2,
+      "image": "assets/items/real-oreo-cream.jpg",
+      "ar": {
+        "name": "كيكة أوريو",
+        "desc": "كيكة بوظة أوريو كريمية بقطع البسكويت."
+      },
+      "en": {
+        "name": "Oreo Ice Cream Cake",
+        "desc": "Creamy Oreo ice cream cake with biscuit pieces."
+      }
+    }
+  ],
+  "optionGroups": {
+    "scoops": {
+      "label": "scoopsLabel",
+      "type": "radio",
+      "values": [
+        "oneScoop",
+        "twoScoops",
+        "threeScoops"
+      ],
+      "def": "oneScoop"
+    },
+    "serving": {
+      "label": "servingLabel",
+      "type": "radio",
+      "values": [
+        "cup",
+        "cone"
+      ],
+      "def": "cup"
+    },
+    "toppings": {
+      "label": "toppingsLabel",
+      "type": "multi",
+      "values": [
+        "nuts",
+        "pistachio",
+        "chocolateSauce",
+        "berries",
+        "wafer",
+        "honey"
+      ]
+    },
+    "flavors": {
+      "label": "flavorsLabel",
+      "type": "multi",
+      "values": [
+        "fArabic",
+        "fAshta",
+        "fStrawberry",
+        "fLemon",
+        "fChocolate",
+        "fOreo",
+        "fBerry",
+        "fMango",
+        "fVanilla"
+      ]
+    },
+    "cakeSize": {
+      "label": "cakeSizeLabel",
+      "type": "radio",
+      "values": [
+        "cake6",
+        "cake10",
+        "cake16"
+      ],
+      "def": "cake6"
+    },
+    "cakeFlavor": {
+      "label": "cakeFlavorLabel",
+      "type": "multi",
+      "values": [
+        "fArabic",
+        "fAshta",
+        "fStrawberry",
+        "fChocolate",
+        "fOreo",
+        "fBerry",
+        "fMango",
+        "fVanilla"
+      ]
+    },
+    "cakeMsg": {
+      "label": "cakeMsgLabel",
+      "type": "text",
+      "placeholder": "cakeMsgPlaceholder"
+    }
+  },
+  "optionPrices": {
+    "scoops": {
+      "oneScoop": 0,
+      "twoScoops": 1,
+      "threeScoops": 2
+    },
+    "serving": {
+      "cup": 0,
+      "cone": 0.5
+    },
+    "toppings": {
+      "nuts": 0.75,
+      "pistachio": 1,
+      "chocolateSauce": 0.5,
+      "berries": 0.75,
+      "wafer": 0.5,
+      "honey": 0.5
+    },
+    "cakeSize": {
+      "cake6": 0,
+      "cake10": 8,
+      "cake16": 18
+    }
+  }
+}

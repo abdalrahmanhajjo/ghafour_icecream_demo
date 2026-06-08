@@ -1,0 +1,15 @@
+# Netlify config for the React client (Vite SPA).
+# Connect the GitHub repo in Netlify; these settings auto-apply.
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback so client-side routes like /admin work on refresh.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Set VITE_API_URL in the Netlify dashboard (Site settings → Environment variables)
+# to your Render API origin, e.g. https://ghafour-api.onrender.com  (no trailing slash).

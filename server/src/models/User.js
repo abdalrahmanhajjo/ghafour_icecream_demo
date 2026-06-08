@@ -1,0 +1,24 @@
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+
+const { Schema } = mongoose;
+
+const userSchema = new Schema(
+  {
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    passwordHash: { type: String, required: true },
+    name: { type: String, default: '' },
+    role: { type: String, enum: ['admin'], default: 'admin' },
+  },
+  { timestamps: true }
+);
+
+userSchema.methods.checkPassword = function (plain) {
+  return bcrypt.compare(plain, this.passwordHash);
+};
+
+userSchema.statics.hashPassword = function (plain) {
+  return bcrypt.hash(plain, 10);
+};
+
+export default mongoose.model('User', userSchema);
