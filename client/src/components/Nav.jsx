@@ -63,7 +63,7 @@ export default function Nav() {
           </button>
         </div>
         <nav className="mobile-links">
-          {LINKS.map(([href, key]) => (
+          {LINKS.filter(([, key]) => key !== 'navAbout').map(([href, key]) => (
             <a key={key} href={href} onClick={close}>
               {t(key)}
             </a>
