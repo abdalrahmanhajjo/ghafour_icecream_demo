@@ -78,10 +78,16 @@ export default function CartDrawer() {
   return (
     <>
       <div className={`overlay ${cartOpen ? 'open' : ''}`} onClick={closeCart} />
-      <aside className={`cart-drawer ${cartOpen ? 'open' : ''}`}>
+      <aside
+        className={`cart-drawer ${cartOpen ? 'open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={t('cartTitle')}
+        aria-hidden={!cartOpen}
+      >
         <div className="cart-top">
           <h3>{t('cartTitle')}</h3>
-          <button className="close" onClick={closeCart}>
+          <button className="close" onClick={closeCart} aria-label={lang === 'ar' ? 'إغلاق' : 'Close'}>
             ×
           </button>
         </div>
@@ -106,9 +112,9 @@ export default function CartDrawer() {
                       <div className="cart-specs">{formatSpecs(item, row.specs, t, config)}</div>
                     </div>
                     <div className="qty">
-                      <button onClick={() => changeQty(row.key, -1)}>−</button>
-                      <span>{row.qty}</span>
-                      <button onClick={() => changeQty(row.key, 1)}>+</button>
+                      <button onClick={() => changeQty(row.key, -1)} aria-label={lang === 'ar' ? 'إنقاص' : 'Decrease quantity'}>−</button>
+                      <span aria-live="polite">{row.qty}</span>
+                      <button onClick={() => changeQty(row.key, 1)} aria-label={lang === 'ar' ? 'زيادة' : 'Increase quantity'}>+</button>
                     </div>
                   </div>
                 );
@@ -121,6 +127,7 @@ export default function CartDrawer() {
               className="cart-input"
               type="text"
               autoComplete="name"
+              aria-label={t('namePlaceholder')}
               placeholder={t('namePlaceholder')}
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -130,6 +137,7 @@ export default function CartDrawer() {
               type="tel"
               inputMode="tel"
               autoComplete="tel"
+              aria-label={t('phonePlaceholder')}
               placeholder={t('phonePlaceholder')}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -137,6 +145,7 @@ export default function CartDrawer() {
             <textarea
               className={`cart-input cart-textarea ${fulfillment === 'pickup' ? 'field-off' : ''}`}
               autoComplete="street-address"
+              aria-label={t('addressPlaceholder')}
               placeholder={t('addressPlaceholder')}
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -160,6 +169,7 @@ export default function CartDrawer() {
                 <input
                   className="cart-input"
                   type="date"
+                  aria-label={t('scheduleLabel') + ' — ' + (lang === 'ar' ? 'التاريخ' : 'date')}
                   min={minDate}
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
@@ -167,6 +177,7 @@ export default function CartDrawer() {
                 <input
                   className="cart-input"
                   type="time"
+                  aria-label={t('scheduleLabel') + ' — ' + (lang === 'ar' ? 'الوقت' : 'time')}
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
                 />

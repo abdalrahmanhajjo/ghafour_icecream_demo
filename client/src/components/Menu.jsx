@@ -4,7 +4,7 @@ import { categoryLabels } from '../i18n.js';
 import { assetUrl } from '../api.js';
 
 export default function Menu() {
-  const { t, lang, items, categories, openModal, addToCart } = useApp();
+  const { t, lang, items, categories, openModal, addToCart, loadError, reload } = useApp();
   const [activeCat, setActiveCat] = useState('all');
   const [search, setSearch] = useState('');
 
@@ -43,6 +43,7 @@ export default function Menu() {
             <input
               type="search"
               autoComplete="off"
+              aria-label={t('searchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('searchPlaceholder')}
@@ -64,7 +65,19 @@ export default function Menu() {
           ))}
         </div>
         <div className="menu-list">
-          {filtered.length === 0 ? (
+          {loadError ? (
+            <div className="no-results">
+              {lang === 'ar' ? 'تعذّر تحميل المنيو حالياً.' : 'Could not load the menu right now.'}
+              <br />
+              <button
+                className="btn mint"
+                style={{ marginTop: 14 }}
+                onClick={reload}
+              >
+                {lang === 'ar' ? 'إعادة المحاولة' : 'Retry'}
+              </button>
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="no-results">{t('noResults')}</div>
           ) : (
             filtered.map((i) => (
@@ -92,7 +105,11 @@ export default function Menu() {
                     <button className="details-btn" onClick={() => openModal(i.slug)}>
                       {t('detailsBtn')}
                     </button>
-                    <button className="add" onClick={() => addToCart(i)}>
+                    <button
+                      className="add"
+                      onClick={() => addToCart(i)}
+                      aria-label={`${t('addCart')}: ${i[lang].name}`}
+                    >
                       +
                     </button>
                   </div>

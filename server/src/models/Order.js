@@ -41,4 +41,8 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
+// Indexes for the admin dashboard (recent-first lists + status filter).
+orderSchema.index({ createdAt: -1 });
+orderSchema.index({ status: 1, createdAt: -1 });
+
 export default mongoose.model('Order', orderSchema);

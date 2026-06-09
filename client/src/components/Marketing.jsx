@@ -57,10 +57,10 @@ export function Gallery() {
         </div>
         <div className="gallery-grid">
           <div className="gallery-card">
-            <img src={assetUrl('assets/gallery/real-three-cups.jpg')} alt="Ice cream cups" />
+            <img src={assetUrl('assets/gallery/real-three-cups.jpg')} alt="Cups of Ghafour Arabic ice cream with natural fruit flavors" loading="lazy" decoding="async" />
           </div>
           <div className="gallery-card">
-            <img src={assetUrl('assets/gallery/real-sweet-scoops.jpg')} alt="Sweet ice cream scoops" />
+            <img src={assetUrl('assets/gallery/real-sweet-scoops.jpg')} alt="Scoops of sweet Ghafour ice cream" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ router.get(
     const q = { available: true };
     if (req.query.category && req.query.category !== 'all') q.category = req.query.category;
     if (req.query.featured === 'true') q.featured = true;
-    const items = await Item.find(q).sort({ sort: 1, createdAt: 1 });
+    const items = await Item.find(q).sort({ sort: 1, createdAt: 1 }).lean();
     res.json(items);
   })
 );
@@ -23,7 +23,7 @@ router.get(
   requireAuth,
   requireAdmin,
   asyncHandler(async (req, res) => {
-    const items = await Item.find().sort({ sort: 1, createdAt: 1 });
+    const items = await Item.find().sort({ sort: 1, createdAt: 1 }).lean();
     res.json(items);
   })
 );

@@ -39,12 +39,13 @@ export default function Nav() {
           <a className="nav-cta" href="#contact">
             {t('navOrder')}
           </a>
-          <button className="cart-pill" onClick={openCart}>
+          <button className="cart-pill" onClick={openCart} aria-label={`${t('cart')}: ${cartCount}`}>
             <span className="cart-word">{t('cart')}</span> <span>{cartCount}</span>
           </button>
           <button
             className="menu-toggle"
             aria-label="Open navigation menu"
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen((o) => !o)}
           >
             <span className="hamb">

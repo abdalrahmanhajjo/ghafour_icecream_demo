@@ -1,0 +1,15 @@
+{
+  "name": "Ghafour Original 1919",
+  "short_name": "Ghafour 1919",
+  "description": "Original Arabic ice cream — Tripoli. Order delivery via WhatsApp.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff7fb",
+  "theme_color": "#25675d",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/assets/ghafour-logo.jpg", "sizes": "192x192", "type": "image/jpeg" },
+    { "src": "/assets/ghafour-logo.jpg", "sizes": "512x512", "type": "image/jpeg" }
+  ]
+}

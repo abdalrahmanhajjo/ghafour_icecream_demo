@@ -113,7 +113,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const q = {};
     if (req.query.status) q.status = req.query.status;
-    const orders = await Order.find(q).sort({ createdAt: -1 }).limit(200);
+    const orders = await Order.find(q).sort({ createdAt: -1 }).limit(200).lean();
     res.json(orders);
   })
 );

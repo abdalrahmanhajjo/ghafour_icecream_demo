@@ -1,0 +1,45 @@
+/* Accessibility add-ons (kept separate so the auto-generated styles.css can be
+   regenerated from the demo without losing these). */
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--berry, #c94775);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip-to-content link (visible only when focused) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  background: var(--mint-dark, #25675d);
+  color: #fff;
+  padding: 10px 16px;
+  font-weight: 800;
+  border-radius: 0 0 10px 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+html[dir='rtl'] .skip-link {
+  left: auto;
+  right: -9999px;
+}
+html[dir='rtl'] .skip-link:focus {
+  right: 0;
+  left: auto;
+  border-radius: 0 0 0 10px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

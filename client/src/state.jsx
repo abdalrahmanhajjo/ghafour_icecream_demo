@@ -13,6 +13,7 @@ export function AppProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [cart, setCart] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
   // UI state (shared so Nav / Menu / Cart don't prop-drill)
   const [cartOpen, setCartOpen] = useState(false);
@@ -25,21 +26,25 @@ export function AppProvider({ children }) {
     localStorage.setItem('lang', lang);
   }, [lang]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const [cfg, cats, its] = await Promise.all([api.config(), api.categories(), api.items()]);
-        // Defensive: never let an unexpected API shape crash the app.
-        setConfig(cfg && typeof cfg === 'object' && !Array.isArray(cfg) ? cfg : { optionGroups: {}, optionPrices: {}, business: {} });
-        setCategories(Array.isArray(cats) ? cats : []);
-        setItems(Array.isArray(its) ? its : []);
-      } catch (e) {
-        console.error('Initial load failed:', e);
-      } finally {
-        setLoaded(true);
-      }
-    })();
+  const loadData = useCallback(async () => {
+    setLoadError(false);
+    try {
+      const [cfg, cats, its] = await Promise.all([api.config(), api.categories(), api.items()]);
+      // Defensive: never let an unexpected API shape crash the app.
+      setConfig(cfg && typeof cfg === 'object' && !Array.isArray(cfg) ? cfg : { optionGroups: {}, optionPrices: {}, business: {} });
+      setCategories(Array.isArray(cats) ? cats : []);
+      setItems(Array.isArray(its) ? its : []);
+    } catch (e) {
+      console.error('Initial load failed:', e);
+      setLoadError(true);
+    } finally {
+      setLoaded(true);
+    }
   }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   useEffect(() => {
     const lock = cartOpen || menuOpen || modalSlug;
@@ -99,6 +104,8 @@ export function AppProvider({ children }) {
     cartLeadDays,
     findItem,
     loaded,
+    loadError,
+    reload: loadData,
     // ui
     cartOpen,
     openCart: () => {

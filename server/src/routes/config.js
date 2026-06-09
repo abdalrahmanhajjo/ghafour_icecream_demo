@@ -9,7 +9,7 @@ const router = Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const cfg = await Config.findOne({ key: 'options' });
+    const cfg = await Config.findOne({ key: 'options' }).lean();
     res.json({
       optionGroups: cfg?.optionGroups || {},
       optionPrices: cfg?.optionPrices || {},

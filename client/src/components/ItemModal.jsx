@@ -100,11 +100,19 @@ export default function ItemModal() {
   };
 
   return (
-    <div className="item-modal open" onClick={(e) => e.target.classList.contains('item-modal') && closeModal()}>
+    <div
+      className="item-modal open"
+      role="dialog"
+      aria-modal="true"
+      aria-label={item[lang].name}
+      onClick={(e) => e.target.classList.contains('item-modal') && closeModal()}
+    >
       <div className="item-dialog">
         <div className="item-dialog-grid">
           <div
             className="item-dialog-image"
+            role="img"
+            aria-label={item[lang].name}
             style={{ backgroundImage: `url('${assetUrl(item.image)}')` }}
           />
           <div className="item-dialog-body">
@@ -113,7 +121,7 @@ export default function ItemModal() {
                 <span className="cat-badge">{catLabel}</span>
                 <h3>{item[lang].name}</h3>
               </div>
-              <button className="modal-close" onClick={closeModal}>
+              <button className="modal-close" onClick={closeModal} aria-label={lang === 'ar' ? 'إغلاق' : 'Close'}>
                 ×
               </button>
             </div>
@@ -134,9 +142,9 @@ export default function ItemModal() {
 
             <div className="modal-bottom">
               <div className="modal-qty">
-                <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-                <span>{qty}</span>
-                <button onClick={() => setQty((q) => q + 1)}>+</button>
+                <button onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label={lang === 'ar' ? 'إنقاص' : 'Decrease quantity'}>−</button>
+                <span aria-live="polite">{qty}</span>
+                <button onClick={() => setQty((q) => q + 1)} aria-label={lang === 'ar' ? 'زيادة' : 'Increase quantity'}>+</button>
               </div>
               <button className="btn modal-add" onClick={onAdd}>
                 {t('addCart')} • ${(unit * qty).toFixed(2)}

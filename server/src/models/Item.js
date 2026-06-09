@@ -27,4 +27,8 @@ const itemSchema = new Schema(
   { timestamps: true }
 );
 
+// Public menu query (available items by category, ordered) + featured strip.
+itemSchema.index({ available: 1, category: 1, sort: 1 });
+itemSchema.index({ featured: 1, available: 1 });
+
 export default mongoose.model('Item', itemSchema);

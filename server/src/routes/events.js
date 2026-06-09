@@ -51,7 +51,7 @@ router.get(
   requireAuth,
   requireAdmin,
   asyncHandler(async (req, res) => {
-    const list = await EventInquiry.find().sort({ createdAt: -1 }).limit(200);
+    const list = await EventInquiry.find().sort({ createdAt: -1 }).limit(200).lean();
     res.json(list);
   })
 );

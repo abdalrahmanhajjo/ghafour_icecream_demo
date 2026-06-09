@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import morgan from 'morgan';
 import hpp from 'hpp';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -28,10 +29,22 @@ const app = express();
 app.disable('x-powered-by');
 app.set('trust proxy', 1); // correct client IPs behind a proxy (for rate limiting)
 
-// --- Security headers ---
+// --- gzip responses ---
+app.use(compression());
+
+// --- Security headers (incl. a restrictive CSP for the image/JSON API surface) ---
 app.use(
   helmet({
-    contentSecurityPolicy: false, // this is a JSON/image API; the web client sets its own CSP
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        defaultSrc: ["'none'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        frameAncestors: ["'none'"],
+        baseUri: ["'none'"],
+      },
+    },
     crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow the client to <img> our uploads
   })
 );
@@ -53,9 +66,10 @@ app.use(
   rateLimit({ windowMs: 15 * 60 * 1000, max: 600, standardHeaders: true, legacyHeaders: false })
 );
 
-// Static files: demo assets (dev convenience) + admin uploads
-app.use('/assets', express.static(path.join(__dirname, '..', '..', 'assets')));
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+// Static files: demo assets (dev convenience) + admin uploads, with long cache.
+const staticOpts = { maxAge: '7d', etag: true };
+app.use('/assets', express.static(path.join(__dirname, '..', '..', 'assets'), staticOpts));
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'), staticOpts));
 
 app.get('/api/health', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 app.use('/api/auth', authRoutes);

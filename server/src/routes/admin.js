@@ -28,8 +28,8 @@ router.get(
         EventInquiry.countDocuments({ status: 'new' }),
         Item.countDocuments(),
         Item.countDocuments({ available: false }),
-        Order.find().sort({ createdAt: -1 }).limit(6),
-        EventInquiry.find().sort({ createdAt: -1 }).limit(5),
+        Order.find().sort({ createdAt: -1 }).limit(6).lean(),
+        EventInquiry.find().sort({ createdAt: -1 }).limit(5).lean(),
       ]);
 
     const statusMap = Object.fromEntries(byStatus.map((s) => [s._id, s.count]));

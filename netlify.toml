@@ -13,3 +13,14 @@
 
 # Set VITE_API_URL in the Netlify dashboard (Site settings → Environment variables)
 # to your Render API origin, e.g. https://ghafour-api.onrender.com  (no trailing slash).
+
+# Security headers for every response (incl. a strict Content-Security-Policy).
+# Note: the CSP allow-lists the Render API origin — update it if the API URL changes.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://ghafour-api.onrender.com; connect-src 'self' https://ghafour-api.onrender.com; frame-src https://www.google.com https://maps.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"

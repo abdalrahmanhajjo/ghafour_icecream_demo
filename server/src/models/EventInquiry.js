@@ -17,4 +17,7 @@ const eventInquirySchema = new Schema(
   { timestamps: true }
 );
 
+eventInquirySchema.index({ createdAt: -1 });
+eventInquirySchema.index({ status: 1, createdAt: -1 });
+
 export default mongoose.model('EventInquiry', eventInquirySchema);

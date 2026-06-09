@@ -9,7 +9,7 @@ const router = Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const cats = await Category.find({ active: true }).sort({ sort: 1 });
+    const cats = await Category.find({ active: true }).sort({ sort: 1 }).lean();
     res.json(cats);
   })
 );

@@ -9,9 +9,12 @@ import CartDrawer from '../components/CartDrawer.jsx';
 import ItemModal from '../components/ItemModal.jsx';
 
 export default function Home() {
-  const { t, loaded } = useApp();
+  const { t, lang, loaded } = useApp();
   return (
     <>
+      <a className="skip-link" href="#menu">
+        {lang === 'ar' ? 'تخطَّ إلى المنيو' : 'Skip to menu'}
+      </a>
       <div className="announcement">{t('announcement')}</div>
       <Nav />
       <main id="home">
