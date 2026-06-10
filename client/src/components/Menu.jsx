@@ -39,7 +39,12 @@ export default function Menu() {
         </div>
         <div className="menu-controls">
           <label className="menu-search">
-            <span className="menu-search-icon">⌕</span>
+            <span className="menu-search-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="20" y1="20" x2="16.65" y2="16.65" />
+              </svg>
+            </span>
             <input
               type="search"
               autoComplete="off"
