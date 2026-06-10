@@ -3,6 +3,8 @@ import { useApp } from '../state.jsx';
 import { categoryLabels } from '../i18n.js';
 import { assetUrl } from '../api.js';
 
+const arNum = (n) => String(n).replace(/\d/g, (d) => '٠١٢٣٤٥٦٧٨٩'[d]);
+
 export default function Menu() {
   const { t, lang, items, categories, openModal, addToCart, loadError, reload } = useApp();
   const [activeCat, setActiveCat] = useState('all');
@@ -15,9 +17,9 @@ export default function Menu() {
   };
 
   const tabs = ['all', ...categories.map((c) => c.key)];
+  const term = search.trim().toLowerCase();
 
   const filtered = useMemo(() => {
-    const term = search.trim().toLowerCase();
     let list = activeCat === 'all' ? items : items.filter((i) => i.category === activeCat);
     if (term) {
       list = list.filter((i) =>
@@ -27,7 +29,74 @@ export default function Menu() {
       );
     }
     return list;
-  }, [items, activeCat, search, lang, categories]);
+  }, [items, activeCat, term, lang, categories]);
+
+  // Detail badges derived from the item data.
+  const itemMeta = (i) => {
+    const m = [];
+    if (i.category === 'boxes' || i.category === 'cakes') {
+      if (i.maxFlavors)
+        m.push(lang === 'ar' ? `حتى ${arNum(i.maxFlavors)} نكهات` : `Up to ${i.maxFlavors} flavors`);
+    } else {
+      m.push(lang === 'ar' ? 'قابل للتخصيص' : 'Customizable');
+    }
+    if (i.leadDays) {
+      const h = i.leadDays * 24;
+      m.push(lang === 'ar' ? `حجز مسبق ${arNum(h)} ساعة` : `${h}h pre-order`);
+    }
+    return m;
+  };
+
+  const renderCard = (i) => {
+    const meta = itemMeta(i);
+    return (
+      <article className="menu-item" key={i.slug}>
+        <div className="menu-photo" style={{ backgroundImage: `url('${assetUrl(i.image)}')` }}>
+          <span className="cat-badge">{catLabel(i.category)}</span>
+          {i.featured && (
+            <span className="menu-fav">★ {lang === 'ar' ? 'الأكثر طلباً' : 'Popular'}</span>
+          )}
+          <button className="image-btn" onClick={() => openModal(i.slug)}>
+            {t('seeImage')}
+          </button>
+        </div>
+        <div className="menu-content">
+          <div className="menu-item-body">
+            <h3>{i[lang].name}</h3>
+            <p>{i[lang].desc}</p>
+            {meta.length > 0 && (
+              <div className="menu-meta">
+                {meta.map((m) => (
+                  <span className="menu-tag" key={m}>
+                    {m}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div>
+            <strong className="price">
+              {i.category === 'boxes' ? '' : t('from') + ' '}${i.price.toFixed(2)}
+            </strong>
+          </div>
+          <div className="menu-actions">
+            <button className="details-btn" onClick={() => openModal(i.slug)}>
+              {t('detailsBtn')}
+            </button>
+            <button
+              className="add"
+              onClick={() => addToCart(i)}
+              aria-label={`${t('addCart')}: ${i[lang].name}`}
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </article>
+    );
+  };
+
+  const grouped = activeCat === 'all' && !term;
 
   return (
     <section className="menu-section" id="menu">
@@ -69,60 +138,40 @@ export default function Menu() {
             </button>
           ))}
         </div>
-        <div className="menu-list">
-          {loadError ? (
+
+        {loadError ? (
+          <div className="menu-list">
             <div className="no-results">
               {lang === 'ar' ? 'تعذّر تحميل المنيو حالياً.' : 'Could not load the menu right now.'}
               <br />
-              <button
-                className="btn mint"
-                style={{ marginTop: 14 }}
-                onClick={reload}
-              >
+              <button className="btn mint" style={{ marginTop: 14 }} onClick={reload}>
                 {lang === 'ar' ? 'إعادة المحاولة' : 'Retry'}
               </button>
             </div>
-          ) : filtered.length === 0 ? (
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="menu-list">
             <div className="no-results">{t('noResults')}</div>
-          ) : (
-            filtered.map((i) => (
-              <article className="menu-item" key={i.slug}>
-                <div
-                  className="menu-photo"
-                  style={{ backgroundImage: `url('${assetUrl(i.image)}')` }}
-                >
-                  <span className="cat-badge">{catLabel(i.category)}</span>
-                  <button className="image-btn" onClick={() => openModal(i.slug)}>
-                    {t('seeImage')}
-                  </button>
-                </div>
-                <div className="menu-content">
-                  <div className="menu-item-body">
-                    <h3>{i[lang].name}</h3>
-                    <p>{i[lang].desc}</p>
+          </div>
+        ) : grouped ? (
+          <div className="menu-groups">
+            {categories.map((c) => {
+              const list = filtered.filter((i) => i.category === c.key);
+              if (!list.length) return null;
+              return (
+                <section className="menu-group" key={c.key}>
+                  <div className="menu-group-head">
+                    <h3>{c.labels[lang]}</h3>
+                    <span className="cnt">{list.length}</span>
                   </div>
-                  <div>
-                    <strong className="price">
-                      {i.category === 'boxes' ? '' : t('from') + ' '}${i.price.toFixed(2)}
-                    </strong>
-                  </div>
-                  <div className="menu-actions">
-                    <button className="details-btn" onClick={() => openModal(i.slug)}>
-                      {t('detailsBtn')}
-                    </button>
-                    <button
-                      className="add"
-                      onClick={() => addToCart(i)}
-                      aria-label={`${t('addCart')}: ${i[lang].name}`}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              </article>
-            ))
-          )}
-        </div>
+                  <div className="menu-list">{list.map(renderCard)}</div>
+                </section>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="menu-list">{filtered.map(renderCard)}</div>
+        )}
       </div>
     </section>
   );
