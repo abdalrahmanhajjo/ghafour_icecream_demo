@@ -1,29 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { useApp } from '../state.jsx';
 import { assetUrl } from '../api.js';
-
-// Reveal-on-scroll: adds `.in` when the section enters the viewport (no-JS safe —
-// nothing is hidden unless this arms it).
-function useReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.classList.add('reveal-armed');
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          el.classList.add('in');
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return ref;
-}
 
 const HOURS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const MAPS_URL =
@@ -63,31 +39,12 @@ export function About() {
     ? 'من جيل لجيل، حافظنا على الطعمة الأصلية اللي كبر عليها أهل طرابلس. كل كرة بوظة عنا معمولة بحب، بفواكه طبيعية ومكوّنات نظيفة — نفس الجودة من 1919 لليوم.'
     : 'From one generation to the next, we have kept the original taste Tripoli grew up on. Every scoop is made with care, real fruit and clean ingredients — the same quality from 1919 until today.';
 
-  const ref = useReveal();
-
   return (
-    <section className="split-intro about-premium" id="about" ref={ref}>
-      <div className="container about-grid">
-        <div className="about-visual reveal">
-          <div
-            className="about-img"
-            role="img"
-            aria-label={ar ? 'بوظة غفور اوريجينال' : 'Ghafour ice cream'}
-            style={{ backgroundImage: `url('${assetUrl('assets/gallery/real-three-cups.jpg')}')` }}
-          >
-            <span className="about-seal">
-              <b>1919</b>
-              <i>{ar ? 'الأصل' : 'Original'}</i>
-            </span>
-          </div>
-        </div>
-
-        <div className="about-content reveal">
+    <section className="split-intro" id="about">
+      <div className="container split-grid">
+        <div>
           <div className="section-label">{t('aboutLabel')}</div>
           <h2 className="big-copy">{t('aboutTitle')}</h2>
-          <p className="about-lead">{t('aboutP1')}</p>
-          <p className="about-story">{story}</p>
-
           <div className="about-stats">
             {stats.map(([n, l]) => (
               <div className="about-stat" key={l}>
@@ -96,13 +53,15 @@ export function About() {
               </div>
             ))}
           </div>
-
+        </div>
+        <div className="body-copy">
+          <p>{t('aboutP1')}</p>
+          <p>{story}</p>
           <ul className="about-points">
             {points.map((p) => (
               <li key={p}>{p}</li>
             ))}
           </ul>
-
           <a className="btn mint about-cta" href="#menu">
             {ar ? 'شوف المنيو' : 'See the menu'}
           </a>
