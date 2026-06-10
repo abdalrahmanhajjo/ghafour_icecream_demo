@@ -7,7 +7,6 @@ import ErrorBoundary from './ErrorBoundary.jsx';
 import './styles.css';
 import './a11y.css';
 import './menu-extra.css';
-import './about-extra.css';
 
 // Admin is code-split: storefront visitors never download the dashboard bundle.
 const Admin = lazy(() => import('./admin/Admin.jsx'));
