@@ -6,17 +6,65 @@ const MAPS_URL =
   'https://www.google.com/maps/place/%D8%A8%D9%88%D8%B8%D8%A9+%D8%BA%D9%81%D9%88%D8%B1+%D8%A7%D9%88%D8%B1%D9%8A%D8%AC%D9%8A%D9%86%D8%A7%D9%84+%D9%A1%D9%A9%D9%A1%D9%A9%E2%80%AD/@34.4447827,35.8696213,17z';
 
 export function About() {
-  const { t } = useApp();
+  const { t, lang } = useApp();
+  const ar = lang === 'ar';
+
+  const stats = ar
+    ? [
+        ['1919', 'سنة التأسيس'],
+        ['100%', 'فواكه طبيعية'],
+        ['طرابلس', 'دليفري ومناسبات'],
+      ]
+    : [
+        ['1919', 'Established'],
+        ['100%', 'Natural fruits'],
+        ['Tripoli', 'Delivery & events'],
+      ];
+
+  const points = ar
+    ? [
+        'بوظة عربية أصيلة بوصفة ما تغيّرت من 1919',
+        'فواكه طبيعية طازجة، بدون نكهات صناعية',
+        'كيك بوظة وكاترينغ لكل المناسبات',
+        'دليفري سريع لكل طرابلس عبر واتساب',
+      ]
+    : [
+        'Authentic Arabic ice cream — same recipe since 1919',
+        'Fresh natural fruits, no artificial flavors',
+        'Ice cream cakes & catering for every occasion',
+        'Fast delivery across Tripoli via WhatsApp',
+      ];
+
+  const story = ar
+    ? 'من جيل لجيل، حافظنا على الطعمة الأصلية اللي كبر عليها أهل طرابلس. كل كرة بوظة عنا معمولة بحب، بفواكه طبيعية ومكوّنات نظيفة — نفس الجودة من 1919 لليوم.'
+    : 'From one generation to the next, we have kept the original taste Tripoli grew up on. Every scoop is made with care, real fruit and clean ingredients — the same quality from 1919 until today.';
+
   return (
     <section className="split-intro" id="about">
       <div className="container split-grid">
         <div>
           <div className="section-label">{t('aboutLabel')}</div>
           <h2 className="big-copy">{t('aboutTitle')}</h2>
+          <div className="about-stats">
+            {stats.map(([n, l]) => (
+              <div className="about-stat" key={l}>
+                <b>{n}</b>
+                <span>{l}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="body-copy">
           <p>{t('aboutP1')}</p>
-          <p>{t('aboutP2')}</p>
+          <p>{story}</p>
+          <ul className="about-points">
+            {points.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+          <a className="btn mint about-cta" href="#menu">
+            {ar ? 'شوف المنيو' : 'See the menu'}
+          </a>
         </div>
       </div>
     </section>
