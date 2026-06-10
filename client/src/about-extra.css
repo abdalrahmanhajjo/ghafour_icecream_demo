@@ -1,17 +1,99 @@
-/* "Who we are" section enhancements. */
+/* "Our Story" — premium section. */
 
+.about-premium {
+  overflow: hidden;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 56px;
+  align-items: center;
+}
+
+/* Heritage image with gold "Since 1919" seal */
+.about-visual {
+  position: relative;
+}
+.about-img {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 34px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 34px 90px rgba(92, 54, 62, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+.about-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  background: linear-gradient(180deg, transparent 55%, rgba(32, 59, 53, 0.28));
+}
+.about-seal {
+  position: absolute;
+  inset-inline-end: -16px;
+  bottom: -16px;
+  z-index: 2;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 3px solid var(--gold);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+}
+.about-seal b {
+  font-family: Fraunces, Cairo, serif;
+  font-size: 27px;
+  line-height: 1;
+  color: var(--berry);
+}
+.about-seal i {
+  display: block;
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mint-dark);
+  margin-top: 4px;
+}
+
+/* Content */
+.about-content .section-label {
+  display: inline-block;
+}
+.about-content .big-copy {
+  margin-top: 10px;
+}
+.about-lead {
+  font-size: 19px;
+  line-height: 1.75;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 20px;
+}
+.about-story {
+  color: var(--muted);
+  line-height: 1.9;
+  margin-top: 14px;
+  font-size: 16px;
+}
 .about-stats {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 28px;
+  margin-top: 26px;
 }
 .about-stat {
   background: var(--cream);
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 14px 20px;
-  min-width: 120px;
+  min-width: 116px;
   box-shadow: 0 10px 26px rgba(151, 91, 105, 0.07);
 }
 .about-stat b {
@@ -30,10 +112,9 @@
   text-transform: uppercase;
   color: var(--mint-dark);
 }
-
 .about-points {
   list-style: none;
-  margin: 20px 0 0;
+  margin: 24px 0 0;
   padding: 0;
   display: grid;
   gap: 11px;
@@ -61,13 +142,37 @@
   margin-top: 1px;
 }
 .about-cta {
-  margin-top: 24px;
+  margin-top: 26px;
   align-self: flex-start;
 }
 
-/* The base demo hides this section on phones — show it (enhanced) so customers
-   can read the story on mobile too. */
+/* Scroll reveal (armed by JS so it's no-JS safe) */
+.about-premium.reveal-armed .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about-premium.reveal-armed .about-content.reveal {
+  transition-delay: 0.12s;
+}
+.about-premium.in .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* Responsive */
+@media (max-width: 1040px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+  .about-img {
+    aspect-ratio: 16 / 11;
+  }
+}
 @media (max-width: 640px) {
+  /* base demo hides this on phones — show the enhanced version */
   .split-intro {
     display: block !important;
     padding: 56px 0;
@@ -76,5 +181,17 @@
     flex: 1;
     min-width: 0;
     text-align: center;
+  }
+  .about-seal {
+    width: 86px;
+    height: 86px;
+    inset-inline-end: 8px;
+    bottom: -10px;
+  }
+  .about-seal b {
+    font-size: 21px;
+  }
+  .about-lead {
+    font-size: 17px;
   }
 }
