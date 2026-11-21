@@ -1,0 +1,90 @@
+/* Menu enhancements: detail badges + category section grouping. */
+
+/* Detail tags under each item description */
+.menu-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.menu-tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--mint-dark);
+  background: var(--mint);
+  border: 1px solid rgba(37, 103, 93, 0.18);
+  border-radius: 999px;
+  padding: 4px 10px;
+  letter-spacing: 0.01em;
+}
+
+/* "Popular" badge on featured item photos */
+.menu-fav {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--gold);
+  color: #3a2a12;
+  font-size: 11px;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: 5px 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Category sections (shown when viewing "All") */
+.menu-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+.menu-group-head {
+  max-width: 1120px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-inline: 4px;
+}
+.menu-group-head h3 {
+  font-family: Fraunces, Cairo, serif;
+  font-size: clamp(24px, 3.5vw, 32px);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--mint-dark);
+}
+.menu-group-head .cnt {
+  background: var(--berry);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 11px;
+  min-width: 26px;
+  text-align: center;
+}
+.menu-group-head::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+html[dir='rtl'] .menu-group-head::after {
+  background: linear-gradient(270deg, var(--line), transparent);
+}
+
+@media (max-width: 640px) {
+  .menu-groups {
+    gap: 32px;
+  }
+  .menu-group-head {
+    margin-bottom: 12px;
+  }
+}
