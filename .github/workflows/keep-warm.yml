@@ -1,15 +1,19 @@
 name: Keep API warm
 
-# Render's free tier sleeps after ~15 min idle (cold start ~30-50s). Pinging the
-# health endpoint keeps it responsive for customers. Free via GitHub Actions.
+# Manual only. The old 12-minute schedule ran ~3,600 times a month, which is more
+# than the 2,000 free Actions minutes a private repo gets, so GitHub blocked ALL
+# workflows with a billing error. To keep the Render API awake, use a free external
+# pinger instead (UptimeRobot or cron-job.org) pointed at:
+#   https://ghafour-api.onrender.com/api/health
 on:
-  schedule:
-    - cron: '*/12 * * * *' # every 12 minutes
   workflow_dispatch:
+
+permissions: {}
 
 jobs:
   ping:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     steps:
       - name: Ping health endpoint
-        run: curl -fsS --max-time 90 https://ghafour-api.onrender.com/api/health || true
+        run: curl -fsS --retry 2 --max-time 90 https://ghafour-api.onrender.com/api/health || echo "API did not respond (it may be waking up)"
