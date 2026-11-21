@@ -1,57 +1,38 @@
+import { useEffect, useState } from 'react';
 import { useApp } from '../state.jsx';
-import { assetUrl } from '../api.js';
+import { isOpen } from '../lib/hours.js';
+import FlavorStage from './FlavorStage.jsx';
+import Icon from './Icon.jsx';
 
 export default function Hero() {
-  const { t, config } = useApp();
-  const wa = config.business?.whatsapp || '96179167963';
+  const { t } = useApp();
+  // live open/closed status (Beirut time), re-checked every minute
+  const [open, setOpen] = useState(() => isOpen());
+  useEffect(() => {
+    const id = setInterval(() => setOpen(isOpen()), 60_000);
+    return () => clearInterval(id);
+  }, []);
   return (
-    <section className="hero">
-      <div className="container hero-grid">
-        <div>
-          <div className="hero-badge">{t('heroBadge')}</div>
-          <h1>
+    <section className="gh-hero" aria-labelledby="gh-hero-title">
+      <div className="gh-wrap gh-hero-grid">
+        <div className="gh-hero-copy">
+          <p className="gh-eyebrow">{t('heroEyebrow')}</p>
+          <h1 id="gh-hero-title" className="gh-hero-title">
             <span>{t('heroTitleA')}</span>
-            <span>{t('heroTitleB')}</span>
+            <span className="gh-accent">{t('heroTitleB')}</span>
           </h1>
-          <p>{t('heroText')}</p>
-          <div className="hero-actions">
-            <a className="btn mint" href="#menu">
-              {t('heroMenu')}
+          <p className="gh-hero-text">{t('heroText')}</p>
+          <div className="gh-hero-actions">
+            <a className="gh-btn gh-btn--primary gh-btn--lg" href="#menu">
+              {t('heroCta')} <Icon name="arrow" size={18} className="gh-flip-rtl" />
             </a>
-            <a
-              className="btn outline"
-              href="https://www.instagram.com/ghafour_original1919/"
-              target="_blank"
-              rel="noopener"
-            >
-              Instagram
-            </a>
-          </div>
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <b>1919</b>
-              <span>{t('statSince')}</span>
-            </div>
-            <div className="hero-stat">
-              <b>10:30</b>
-              <span>{t('statOpen')}</span>
-            </div>
-            <a className="hero-stat" href={`https://wa.me/${wa}`} target="_blank" rel="noopener">
-              <b style={{ direction: 'ltr', unicodeBidi: 'isolate' }}>79 167 963</b>
-              <span>{t('statPhone')}</span>
-            </a>
+            <span className={`gh-hero-hours ${open ? 'is-open' : 'is-closed'}`}>
+              <span className="gh-status-dot" aria-hidden="true" />
+              {t(open ? 'heroHours' : 'heroClosed')}
+            </span>
           </div>
         </div>
-        <div className="hero-card">
-          <img
-            src={assetUrl('assets/hero-cone.png')}
-            alt="Ghafour ice cream cone"
-            decoding="async"
-            fetchpriority="high"
-            width="600"
-            height="760"
-          />
-        </div>
+        <FlavorStage />
       </div>
     </section>
   );

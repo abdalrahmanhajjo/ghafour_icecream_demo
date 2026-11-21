@@ -1,52 +1,42 @@
+import { useEffect } from 'react';
 import { useApp } from '../state.jsx';
 import Nav from '../components/Nav.jsx';
 import Hero from '../components/Hero.jsx';
-import { About, Features, Gallery, Location, Contact, Footer } from '../components/Marketing.jsx';
+import { Announcement, Facts, Story, Visit, Footer } from '../components/Marketing.jsx';
 import Menu from '../components/Menu.jsx';
-import Featured from '../components/Featured.jsx';
 import Events from '../components/Events.jsx';
 import CartDrawer from '../components/CartDrawer.jsx';
 import ItemModal from '../components/ItemModal.jsx';
+import OrderBar from '../components/OrderBar.jsx';
 
 export default function Home() {
-  const { t, lang, loaded } = useApp();
+  const { lang, cartCount } = useApp();
+
+  // leave room for the phone order bar so it never covers the footer
+  useEffect(() => {
+    document.body.classList.toggle('gh-has-bar', cartCount > 0);
+    return () => document.body.classList.remove('gh-has-bar');
+  }, [cartCount]);
+
   return (
-    <>
-      <a className="skip-link" href="#menu">
+    <div className="gh">
+      <a className="gh-skip" href="#menu">
         {lang === 'ar' ? 'تخطَّ إلى المنيو' : 'Skip to menu'}
       </a>
-      <div className="announcement">{t('announcement')}</div>
+      <Announcement />
       <Nav />
       <main id="home">
         <Hero />
-        <About />
-        <Features />
+        <Facts />
         <Menu />
-        <Featured />
         <Events />
-        <Gallery />
-        <Location />
-        <Contact />
+        <Story />
+        <Visit />
       </main>
       <Footer />
+      <OrderBar />
       <CartDrawer />
       <ItemModal />
-      {!loaded && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            display: 'grid',
-            placeItems: 'center',
-            background: 'rgba(255,253,247,.6)',
-            zIndex: 300,
-            fontWeight: 800,
-            color: 'var(--mint-dark)',
-          }}
-        >
-          …
-        </div>
-      )}
-    </>
+    </div>
   );
 }
