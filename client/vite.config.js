@@ -21,11 +21,16 @@ export default defineConfig({
     cssCodeSplit: true,
     // No inline polyfill script → lets us run a strict CSP (script-src 'self').
     modulePreload: { polyfill: false },
+    // The only chunk over 500 kB is three.js (~135 kB gzipped). It is loaded on demand
+    // by the 3D cup after the page is interactive, never on the critical path.
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         // Split the React runtime into its own long-cacheable vendor chunk.
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // three.js only loads with the 3D cup (dynamic import) — never in the main bundle
+            if (id.includes('node_modules/three/')) return 'three';
             if (id.includes('react-router')) return 'router';
             if (id.includes('react')) return 'react';
             return 'vendor';

@@ -1,5 +1,4 @@
-/* Accessibility add-ons (kept separate so the auto-generated styles.css can be
-   regenerated from the demo without losing these). */
+/* Accessibility add-ons shared by the storefront and the admin. */
 
 /* Visible keyboard focus everywhere */
 :focus-visible {
