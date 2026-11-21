@@ -2,12 +2,13 @@
 // Mounts `app` via supertest (NODE_ENV=test => no connect/listen) and exercises the
 // endpoints that run before any DB access: health, headers, validation, rate limit, 404.
 process.env.NODE_ENV = 'test';
-process.env.JWT_SECRET = 'test-secret-key-which-is-long-enough-1234';
+process.env.JWT_SECRET = 'ci-test-jwt-key-long-enough-0123456789';
 process.env.MONGO_URI = 'mongodb://127.0.0.1:27017/test'; // never connected in test mode
 process.env.CLIENT_ORIGIN = 'http://localhost:5173';
 
 import request from 'supertest';
-import app from '../src/index.js';
+// Dynamic import: static imports are hoisted and would load the app BEFORE the env above is set.
+const { default: app } = await import('../src/index.js');
 
 let pass = 0,
   fail = 0;
